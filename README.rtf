@@ -1,0 +1,164 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Bold;\f2\fswiss\fcharset0 Helvetica-Bold;
+\f3\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww21140\viewh13320\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # COVID-19 Data Analysis Project\
+\
+## Project Description\
+This project analyzes COVID-19 data from an Excel sheet. The analysis includes calculating descriptive statistics such as mean, median, and mode for cases and deaths. Additionally, it features data visualizations and advanced analyses like rolling averages to identify trends over time.\
+\
+## Data\
+The data used in this project contains the following columns:\
+- Name\
+- WHO Region\
+- Cases - cumulative total\
+- Cases - cumulative total per 100000 population\
+- Cases - newly reported in last 7 days\
+- Cases - newly reported in last 7 days per 100000 population\
+- Cases - newly reported in last 24 hours\
+- Deaths - cumulative total\
+- Deaths - cumulative total per 100000 population\
+- Deaths - newly reported in last 7 days\
+- Deaths - newly reported in last 7 days per 100000 population\
+- Deaths - newly reported in last 24 hours\
+\
+## Setup Instructions\
+
+\f1\b 1. Clone the repository:\
+
+\f0\b0    ```bash\
+   git clone https://github.com/yourusername/COVID19-Data-Analysis.git\
+   cd COVID19-Data-Analysis\
+\
+
+\f2\b 2.
+\f0\b0  
+\f1\b \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Create a virtual environment
+\f3\b0 :\
+python -m venv venv\
+source venv/bin/activate  # On Windows use `venv\\Scripts\\activate`\
+\
+
+\f1\b 3.  Install the necessary libraries:\
+
+\f3\b0 pip install pandas numpy matplotlib seaborn\
+\
+
+\f1\b 4. Run the analysis script:\
+
+\f3\b0 python analysis.py\
+\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 \strokec2 Data Exploration\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f3\b0\fs24 \cf0 The initial step involves loading the data and understanding its structure. The data is loaded using pandas, and basic information about the dataset is displayed.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \strokec2 import pandas as pd\
+\
+# Load the data\
+file_path = 'COVID19.csv'\
+data = pd.read_csv(file_path)\
+\
+# Display basic information about the data\
+print(data.info())\
+\
+# Display summary statistics\
+print(data.describe())\
+\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 \strokec2 Data Cleaning\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f3\b0\fs24 \cf0 Missing values are handled by filling them with zeros. Data types are also checked and corrected if necessary.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \strokec2 # Fill or drop missing values as necessary (example: fill with zero)\
+data = data.fillna(0)\
+\
+# Verify changes\
+print(data.info())\
+\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 \strokec2 Descriptive Statistics\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f3\b0\fs24 \cf0 Mean, median, and mode are calculated for cumulative cases and deaths.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \strokec2 # Calculate mean, median, and mode for cumulative cases\
+cumulative_cases_mean = data['Cases - cumulative total'].mean()\
+cumulative_cases_median = data['Cases - cumulative total'].median()\
+cumulative_cases_mode = data['Cases - cumulative total'].mode()[0]\
+\
+# Calculate mean, median, and mode for cumulative deaths\
+cumulative_deaths_mean = data['Deaths - cumulative total'].mean()\
+cumulative_deaths_median = data['Deaths - cumulative total'].median()\
+cumulative_deaths_mode = data['Deaths - cumulative total'].mode()[0]\
+\
+# Display results\
+print(f"Cumulative Cases - Mean: \{cumulative_cases_mean\}, Median: \{cumulative_cases_median\}, Mode: \{cumulative_cases_mode\}")\
+print(f"Cumulative Deaths - Mean: \{cumulative_deaths_mean\}, Median: \{cumulative_deaths_median\}, Mode: \{cumulative_deaths_mode\}")\
+\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 \strokec2 Data Visualization\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f3\b0\fs24 \cf0 Histograms and line plots are created to visualize the distribution and trends of the data.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \strokec2 import matplotlib.pyplot as plt\
+import seaborn as sns\
+\
+# Plotting cumulative cases\
+plt.figure(figsize=(10, 6))\
+sns.histplot(data['Cases - cumulative total'], kde=True)\
+plt.title('Distribution of Cumulative COVID-19 Cases')\
+plt.xlabel('Cumulative Cases')\
+plt.ylabel('Frequency')\
+plt.show()\
+\
+# Plotting cumulative deaths\
+plt.figure(figsize=(10, 6))\
+sns.histplot(data['Deaths - cumulative total'], kde=True)\
+plt.title('Distribution of Cumulative COVID-19 Deaths')\
+plt.xlabel('Cumulative Deaths')\
+plt.ylabel('Frequency')\
+plt.show()\
+\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 \strokec2 Advanced Analysis\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f3\b0\fs24 \cf0 An example of advanced analysis includes calculating and plotting a rolling average for new cases reported in the last 7 days.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \strokec2 # Example: Rolling average for new cases reported in last 7 days\
+data['new_cases_rolling'] = data['Cases - newly reported in last 7 days'].rolling(window=7).mean()\
+\
+# Plotting the rolling average\
+plt.figure(figsize=(10, 6))\
+sns.lineplot(x=data.index, y='new_cases_rolling', data=data)\
+plt.title('7-Day Rolling Average of Newly Reported COVID-19 Cases')\
+plt.xlabel('Index')\
+plt.ylabel('New Cases (7-Day Rolling Average)')\
+plt.show()\
+\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 \strokec2 Conclusion\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f3\b0\fs24 \cf0 This project provides a comprehensive analysis of COVID-19 data, including descriptive statistics, data visualizations, and advanced analysis techniques. The code and findings are documented to help others understand and replicate the analysis.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 \strokec2 \
+
+\f3\b0 \
+}
